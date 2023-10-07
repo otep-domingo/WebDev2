@@ -35,12 +35,22 @@ namespace WebDev2.Controllers
         }
 
         [HttpPost]
-        public string SubmitForm(IFormCollection form)
+        public string SubmitForm(User user)
         {
-            var UserName = form["UserName"].ToString();
-            var UserEmail = form["UserEmails"].ToString();
-            // Handle data as needed...
-            return $"User Created: UserName: {UserName}, UserEmail: {UserEmail}";
+            //var UserName = form["UserName"].ToString();
+            //var UserEmail = form["UserEmails"].ToString();
+            //// Handle data as needed...
+            //return $"User Created: UserName: {UserName}, UserEmail: {UserEmail}";
+
+            if (user != null)
+            {
+                if (ModelState.IsValid)
+                {
+                    // Handle data as needed...
+                    return $"User Created: UserName: {user.UserName}, UserEmail: {user.UserEmail}";
+                }
+            }
+            return "Some Error Occured";
         }
     }
 }

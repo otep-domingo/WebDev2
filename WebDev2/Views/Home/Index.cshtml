@@ -1,4 +1,5 @@
-﻿@{
+﻿@model User
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -8,12 +9,22 @@
     I am root!
 
 
-    <form method="post" asp-controller="Home" asp-action="SubmitForm">
+    <!--
+<form method="post" asp-controller="Home" asp-action="SubmitForm">
     <label>Name:</label>
     <input type="text" name="UserName" />
     <br />
     <label>Email:</label>
     <input type="text" name="UserEmail" />
+    <br />
+    <button type="submit">Submit</button>
+    -->
+    <form method="post" asp-controller="Home" asp-action="SubmitForm">
+    <label>Name:</label>
+    <input asp-for="UserName" />
+    <br />
+    <label>Email:</label>
+    <input asp-for="UserEmail" />
     <br />
     <button type="submit">Submit</button>
 </form>
