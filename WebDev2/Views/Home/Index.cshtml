@@ -6,4 +6,15 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
     I am root!
+
+
+    <form method="post" asp-controller="Home" asp-action="SubmitForm">
+    <label>Name:</label>
+    <input type="text" name="UserName" />
+    <br />
+    <label>Email:</label>
+    <input type="text" name="UserEmail" />
+    <br />
+    <button type="submit">Submit</button>
+</form>
 </div>

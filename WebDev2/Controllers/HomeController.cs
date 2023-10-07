@@ -33,5 +33,14 @@ namespace WebDev2.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        [HttpPost]
+        public string SubmitForm(IFormCollection form)
+        {
+            var UserName = form["UserName"].ToString();
+            var UserEmail = form["UserEmails"].ToString();
+            // Handle data as needed...
+            return $"User Created: UserName: {UserName}, UserEmail: {UserEmail}";
+        }
     }
 }
