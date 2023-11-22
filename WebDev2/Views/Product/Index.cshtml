@@ -27,8 +27,7 @@
                 <td>@Html.DisplayFor(modelItem=>item.price)</td>
                 <td>@Html.DisplayFor(modelItem=>item.datetimeadded)</td>
                 <td>@Html.DisplayFor(modelItem=>item.description)</td>
-                <td><a asp-action="Edit" asp-route-id="@item.idproducts">Edit</a>
-                    <a asp-action="Details" asp-route-id="@item.idproducts">Details</a></td>
+                <td>Edit | Delete</td>
             </tr>
         }
     </tbody>
