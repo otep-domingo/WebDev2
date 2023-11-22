@@ -1,0 +1,55 @@
+﻿@model WebDev2.Models.DTO.Product
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Product</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="idproducts" class="control-label"></label>
+                <input asp-for="idproducts" class="form-control" value="0" disabled/>
+                <span asp-validation-for="idproducts" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="productname" class="control-label"></label>
+                <input asp-for="productname" class="form-control" />
+                <span asp-validation-for="productname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="category" class="control-label"></label>
+                <input asp-for="category" class="form-control" />
+                <span asp-validation-for="category" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="price" class="control-label"></label>
+                <input asp-for="price" class="form-control" />
+                <span asp-validation-for="price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="datetimeadded" class="control-label"></label>
+                <input asp-for="datetimeadded" class="form-control" />
+                <span asp-validation-for="datetimeadded" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="description" class="control-label"></label>
+                <input asp-for="description" class="form-control" />
+                <span asp-validation-for="description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

@@ -28,10 +28,46 @@ namespace WebDev2.Controllers
             return View();
         }
 
+        public IActionResult Calculator()
+        {
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        [HttpPost]
+        public ActionResult CalculateBill(IFormCollection form)
+        {
+            var bill = Convert.ToInt32(form["currentbill"].ToString()) - Convert.ToInt32(form["previousbill"].ToString());
+            float rate = 0.0f;
+            float charge = 0.0f;
+            if (bill < 200 && bill > 0)
+            {
+                charge = 1.2f;
+            }else if(bill>=200 && bill <= 400)
+            {
+                charge = 1.50f;
+            }else if(bill>=401 && bill <= 600)
+            {
+                charge = 1.80f;
+            }
+            else
+            {
+                charge = 2.0f;
+            }
+            var newRate = charge * 12.50;
+            var total = bill * newRate;
+            // return "Your total bill is " + total;
+            ViewBag.total = total;
+            ViewBag.newrate = newRate;
+            ViewBag.previous = form["previousbill"].ToString();
+            ViewBag.current = form["currentbill"].ToString();
+            ViewBag.bill = bill;
+            return View("Calculator");
         }
 
         [HttpPost]

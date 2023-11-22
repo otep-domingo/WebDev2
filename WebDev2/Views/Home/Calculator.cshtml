@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewData["Title"] = "Calculator";
+}
+
+<h1>Bill Calculator</h1>
+<form asp-controller="Home" asp-action="CalculateBill">
+    <table>
+        <tr>
+            <td><label for="previousbill">Previous meter reading</label></td>
+            <td><input type="text" name="previousbill" id="previousbill" /></td>
+        </tr>
+        <tr>
+            <td><label for="currentbill">Current meter reading</label></td>
+            <td><input type="text" name="currentbill" id="currentbill" /></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" name="submit" value="Calculate Bill" /></td>
+        </tr>
+    </table>
+
+    
+</form>
+
+<table>
+    <tr>
+        <td>Previous meter reading</td>
+        <td>@ViewBag.previous</td>
+    </tr>
+    <tr>
+        <td>Current meter reading</td>
+        <td>@ViewBag.current</td>
+    </tr>
+    <tr>
+        <td>Total reading in kilowatt hour</td>
+        <td>@ViewBag.bill</td>
+    </tr>
+    <tr>
+        <td>Rate per kilowatt hour</td>
+        <td>@ViewBag.newrate</td>
+    </tr>
+    <tr>
+        <td>Total</td>
+        <td>@ViewBag.total</td>
+    </tr>
+</table>
