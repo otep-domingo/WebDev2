@@ -3,7 +3,18 @@
     ViewData["Title"] = "Index";
 }
 <h2>Index</h2>
-@Html.ActionLink("Add New Product", "Create", "Product")
+<table>
+    <tr>
+        <td>@Html.ActionLink("Add New Product", "Create", "Product")</td>
+        <td>
+            <form asp-controller="Product" asp-action="Index">
+                <input type="text" value="" name="idproducts" />
+                <input type="submit" value="Search"/>
+            </form>
+        </td>
+    </tr>
+</table>
+
                 
 <table class="table">
     <thead>
@@ -13,7 +24,6 @@
             <th>@Html.DisplayNameFor(model=>model.category)</th>
             <th>@Html.DisplayNameFor(model=>model.price)</th>
             <th>@Html.DisplayNameFor(model=>model.datetimeadded)</th>
-            <th>@Html.DisplayNameFor(model=>model.description)</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -26,9 +36,10 @@
                 <td>@Html.DisplayFor(modelItem=>item.category)</td>
                 <td>@Html.DisplayFor(modelItem=>item.price)</td>
                 <td>@Html.DisplayFor(modelItem=>item.datetimeadded)</td>
-                <td>@Html.DisplayFor(modelItem=>item.description)</td>
-                <td><a asp-action="Edit" asp-route-id="@item.idproducts">Edit</a>
-                    <a asp-action="Details" asp-route-id="@item.idproducts">Details</a></td>
+                <td><a asp-action="Edited" asp-route-id="@item.idproducts">Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.idproducts">Details</a>
+                <a asp-action="Delete" asp-route-id="@item.idproducts">Delete</a>    
+                </td>
             </tr>
         }
     </tbody>

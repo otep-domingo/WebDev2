@@ -6,6 +6,8 @@ namespace WebDev2.DataConnection
     {
         public DbSet<Product> Products { get; set; }
         //public DbSet<Person> Persons { get; set; }
-        public MySqlDbContext(DbContextOptions<MySqlDbContext> options) : base(options) { }
+        public MySqlDbContext(DbContextOptions<MySqlDbContext> options) : base(options) { 
+
+        }
     }
 }

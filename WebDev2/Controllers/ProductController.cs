@@ -13,17 +13,33 @@ namespace WebDev2.Controllers
             _context = context;
         }
         // GET: ProductController
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string idproducts)
         {
-            return View(await _context.Products.ToListAsync());
+            var products = from p in _context.Products
+                           select p;
+            if (!String.IsNullOrEmpty(idproducts))
+            {
+                try
+                {
+                    int pId = Convert.ToInt32(idproducts);
+                    products = products.Where(p => p.idproducts==pId);
+                }catch(FormatException ee)
+                {
+
+                }
+ 
+            }
+           
+            //return View(await _context.Products.ToListAsync());
+            return View(await products.ToListAsync());
         }
 
         // GET: ProductController/Details/5
         public ActionResult Details(int id)
         {
-            Models.Product p = new Models.Product();
-            InventoryNamespace.Items items = new InventoryNamespace.Items();
-            return View();
+            Models.Product p = _context.Products.Find(id); 
+            
+            return View(p);
         }
 
         // GET: ProductController/Create
@@ -78,43 +94,75 @@ namespace WebDev2.Controllers
         // GET: ProductController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            if(id==null || _context.Products == null)
+            {
+                return NotFound();
+            }
+            var p = _context.Products.Find(id);
+
+            if (p == null)
+            {
+                return NotFound();
+            }
+            return View(p);
         }
 
         // POST: ProductController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, [Bind()]Models.Product product)
         {
-            try
+            if(id != product.idproducts)
             {
-                return RedirectToAction(nameof(Index));
+                return NotFound();
+                
             }
-            catch
+            if (ModelState.IsValid)
             {
-                return View();
+                try
+                {
+                    _context.Update(product);
+                    _context.SaveChanges();
+                    return RedirectToAction(nameof(Index));
+                }
+                catch
+                {
+                    return View();
+                }
             }
+            return View(product);
         }
 
         // GET: ProductController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            Models.Product p = _context.Products.Find(id);
+
+            return View(p);
         }
 
         // POST: ProductController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id, [Bind()] Models.Product product)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+
+
+            Models.Product p = _context.Products.Find(id);
+
+           
+                try
+                {
+                    _context.Remove(p);
+                    _context.SaveChanges();
+                    return RedirectToAction(nameof(Index));
+                }
+                catch
+                {
+                    return View();
+                }
+            
+            return View(p);
         }
     }
 }
