@@ -71,7 +71,7 @@ namespace WebDev2.Controllers
         }
 
         [HttpPost]
-        public string SubmitForm(User user)
+        public string SubmitForm(Account user)
         {
             //var UserName = form["UserName"].ToString();
             //var UserEmail = form["UserEmails"].ToString();
@@ -83,7 +83,7 @@ namespace WebDev2.Controllers
                 if (ModelState.IsValid)
                 {
                     // Handle data as needed...
-                    return $"User Created: UserName: {user.UserName}, UserEmail: {user.UserEmail}";
+                    return $"User Created: UserName: {user.UserName}";
                 }
             }
             return "Some Error Occured";

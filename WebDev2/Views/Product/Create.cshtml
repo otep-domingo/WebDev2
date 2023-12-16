@@ -22,10 +22,16 @@
                 <input asp-for="productname" class="form-control" />
                 <span asp-validation-for="productname" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            @*<div class="form-group">
                 <label asp-for="category" class="control-label"></label>
                 <input asp-for="category" class="form-control" />
                 <span asp-validation-for="category" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <label>Category</label>
+                <select asp-for="category"
+                class="form-control" 
+                asp-items="@(new SelectList(@ViewBag.Categories,"idcategories","category"))"></select>
             </div>
             <div class="form-group">
                 <label asp-for="price" class="control-label"></label>
@@ -42,6 +48,7 @@
                 <input asp-for="description" class="form-control" />
                 <span asp-validation-for="description" class="text-danger"></span>
             </div>
+            
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

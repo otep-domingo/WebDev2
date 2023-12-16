@@ -1,12 +1,9 @@
-﻿@model User
-@{
+﻿@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-    I am root!
+    <h1 class="display-4">Welcome page goes here</h1>
 
 
     <!--
@@ -19,13 +16,14 @@
     <br />
     <button type="submit">Submit</button>
     -->
-    <form method="post" asp-controller="Home" asp-action="SubmitForm">
+    @*<form method="post" asp-controller="Home" asp-action="SubmitForm">
     <label>Name:</label>
     <input asp-for="UserName" />
     <br />
     <label>Email:</label>
-    <input asp-for="UserEmail" />
+    <input asp-for="Password" />
     <br />
     <button type="submit">Submit</button>
-</form>
+</form>*@
+          
 </div>

@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using WebDev2.DataConnection;
-
+using WebDev2.Data;
+using WebDev2.Models;
 namespace WebDev2.Controllers
 {
     public class ProductController : Controller
@@ -45,6 +45,11 @@ namespace WebDev2.Controllers
         // GET: ProductController/Create
         public ActionResult Create()
         {
+            List<Category> cat = new List<Category>();
+            cat = (from c in _context.Categories
+                   select c).ToList();
+            cat.Insert(0, new Category { idcategories = 0, category = "--Select--" });
+            ViewBag.Categories = cat;
             return View();
         }
 
