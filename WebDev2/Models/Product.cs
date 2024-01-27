@@ -7,7 +7,7 @@ namespace WebDev2.Models
         [Key]
         public int? idproducts { get; set; }
         public string? productname { get; set; }
-        public string? category { get; set; }
+        public int? category { get; set; }
         public double? price { get; set; }
         public DateTime? datetimeadded { get; set; }
         public string? description { get; set; }

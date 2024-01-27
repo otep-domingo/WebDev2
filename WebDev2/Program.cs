@@ -24,8 +24,10 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
-
+//session ends here
+//register the HttpContextAccessor
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+//End of HttpContextAccessor registration
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

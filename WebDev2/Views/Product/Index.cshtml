@@ -5,12 +5,14 @@
 <h2>Index</h2>
 <table>
     <tr>
-        <td>@Html.ActionLink("Add New Product", "Create", "Product")</td>
+        <td>@Html.ActionLink("Add New Product", "Create", "Product") <br />
+            @Html.ActionLink("Print List", "PrintAll", "Product")
         <td>
             <form asp-controller="Product" asp-action="Index">
                 <input type="text" value="" name="idproducts" />
                 <input type="submit" value="Search"/>
             </form>
+
         </td>
     </tr>
 </table>
@@ -39,7 +41,8 @@
                 <td>@Html.DisplayFor(modelItem=>item.description)</td>
                 <td><a asp-action="Edit" asp-route-id="@item.idproducts">Edit</a>
                     <a asp-action="Details" asp-route-id="@item.idproducts">Details</a>
-                    <a asp-action="Delete" asp-route-id="@item.idproducts">Delete</a></td>
+                    <a asp-action="Delete" asp-route-id="@item.idproducts">Delete</a>
+                     <a asp-action="Print" asp-route-id="@item.idproducts">Print</a></td>
             </tr>
         }
     </tbody>

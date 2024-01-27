@@ -1,4 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using iText.Kernel.Geom;
+using iText.Kernel.Pdf;
+using iText.Layout;
+using iText.Layout.Borders;
+using iText.Layout.Element;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebDev2.Data;
@@ -8,6 +13,7 @@ namespace WebDev2.Controllers
     public class ProductController : Controller
     {
         private readonly MySqlDbContext _context;
+        private List<Product> pList = null;
         public ProductController(MySqlDbContext context)
         {
             _context = context;
@@ -22,14 +28,16 @@ namespace WebDev2.Controllers
                 try
                 {
                     int pId = Convert.ToInt32(idproducts);
-                    products = products.Where(p => p.idproducts==pId);
-                }catch(FormatException ee)
+                    products = products.Where(p => p.idproducts == pId);
+                    pList = products.ToList();
+                }
+                catch (FormatException ee)
                 {
 
                 }
- 
+
             }
-           
+
             //return View(await _context.Products.ToListAsync());
             return View(await products.ToListAsync());
         }
@@ -168,6 +176,117 @@ namespace WebDev2.Controllers
                 }
             
             return View(p);
+        }
+
+       
+        public ActionResult Print(int id)
+        {
+            byte[] pdfBytes = null;
+            using (var stream = new MemoryStream())
+            using (var wri = new PdfWriter(stream))
+            using (var pdf = new PdfDocument(wri))
+            using (var document = new Document(pdf, iText.Kernel.Geom.PageSize.A4.Rotate(), false))
+            {
+                //to add a text
+                document.Add(new Paragraph("This is a test"));
+                //to add a table from the database context
+   
+                Table table = new Table(2,true);
+                Cell h1 = new Cell()
+                    .SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER)
+                    .Add(new Paragraph("ID"))
+                    .SetBold();
+                table.AddCell(h1);
+                Cell h2 = new Cell()
+                    .SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER)
+                    .Add(new Paragraph("Product name"))
+                    .SetBold();
+                table.AddCell(h2);
+
+                //var products = from p in _context.Products
+                //               select p;
+                //if (!String.IsNullOrEmpty(id))
+                //{
+                //    try
+                //    {
+                //        int pId = Convert.ToInt32(id);
+                //        products = products.Where(p => p.idproducts == pId);
+
+                //    }
+                //    catch (FormatException ee)
+                //    {
+
+                //    }
+
+                //}
+                foreach (var i in _context.Products.Where(p=>p.idproducts==id))
+                {
+                    Cell idheader = new Cell()
+                        .SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER)
+                        .Add(new Paragraph(i.idproducts.ToString()));
+                    Cell name = new Cell()
+                        .SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER)
+                        .Add(new Paragraph(i.productname));
+                    table.AddCell(idheader);
+                    table.AddCell(name);
+                    Border b = new SolidBorder(1.0f);
+                    table.SetBorderBottom(b);
+                    document.Add(table);
+                }
+                document.Close();
+                document.Flush();
+                pdfBytes = stream.ToArray();
+            }
+            HttpContext.Response.Headers.Add("content-disposition", "inline;filename=" + "sample.pdf");
+            return File(fileContents: pdfBytes, "application/pdf");
+
+        }
+
+        public ActionResult PrintAll()
+        {
+            byte[] pdfBytes = null;
+            using (var stream = new MemoryStream())
+            using (var wri = new PdfWriter(stream))
+            using (var pdf = new PdfDocument(wri))
+            using (var document = new Document(pdf, iText.Kernel.Geom.PageSize.A4.Rotate(), false))
+            {
+                //to add a text
+                document.Add(new Paragraph("This is a test"));
+                //to add a table from the database context
+
+                Table table = new Table(2, true);
+                Cell h1 = new Cell()
+                    .SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER)
+                    .Add(new Paragraph("ID"))
+                    .SetBold();
+                table.AddCell(h1);
+                Cell h2 = new Cell()
+                    .SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER)
+                    .Add(new Paragraph("Product name"))
+                    .SetBold();
+                table.AddCell(h2);
+
+                foreach (var i in _context.Products)
+                {
+                    Cell idheader = new Cell()
+                        .SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER)
+                        .Add(new Paragraph(i.idproducts.ToString()));
+                    Cell name = new Cell()
+                        .SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER)
+                        .Add(new Paragraph(i.productname));
+                    table.AddCell(idheader);
+                    table.AddCell(name);
+                    Border b = new SolidBorder(1.0f);
+                    table.SetBorderBottom(b);
+                    document.Add(table);
+                }
+                document.Close();
+                document.Flush();
+                pdfBytes = stream.ToArray();
+            }
+            HttpContext.Response.Headers.Add("content-disposition", "inline;filename=" + "sample.pdf");
+            return File(fileContents: pdfBytes, "application/pdf");
+
         }
     }
 }
